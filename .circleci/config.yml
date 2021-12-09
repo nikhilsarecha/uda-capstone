@@ -52,6 +52,6 @@ jobs:
                 ./run_docker.sh
 
 workflows:
-  default:
-    jobs:
-      - build  
+    default:
+        jobs:
+         - build  
