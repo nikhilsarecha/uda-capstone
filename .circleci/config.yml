@@ -3,6 +3,7 @@
 # Check https://circleci.com/docs/2.0/language-python/ for more details
 #
 version: 2
+
 jobs:
   
   build:
@@ -56,13 +57,20 @@ jobs:
     
     upload-docker:
         docker:
-        - image: circleci/node:13.8.0
+            - image: circleci/node:13.8.0
         steps:
-        - checkout
-        - setup_remote_docker:
-            version: 19.03.13
-        - run:
-            name: Push Docker Image to Docker Hub
-            command: |
-              docker login -u nikhilsarecha -p $DOCKERHUB_PASSWORD
-              docker push nikhilsarecha/uda-capstone:latest
+            - checkout
+            - setup_remote_docker:
+                version: 19.03.13
+            - run:
+                name: Push Docker Image to Docker Hub
+                command: |
+                    docker login -u nikhilsarecha -p $DOCKERHUB_PASSWORD
+                    docker push nikhilsarecha/uda-capstone:latest
+
+workflows:
+  default:
+    jobs:
+      - build
+      - docker-build
+      - upload-docker
