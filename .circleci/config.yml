@@ -45,8 +45,8 @@ jobs:
       - run:
           name: build docker image
           command: |
-            docker build -t uda-capstone .
-            docker run -d -p 8000:80 uda-capstone
+            docker build -t nikhilsarecha/uda-capstone:latest .
+            docker run -d -p 8000:80 nikhilsarecha/uda-capstone:latest
 
   upload-docker:
     machine: true
