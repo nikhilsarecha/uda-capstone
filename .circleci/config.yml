@@ -43,11 +43,10 @@ jobs:
     steps:
       - checkout
       - run:
-          name: build and upload docker container
-          no_output_timeout: 30m
+          name: build docker image
           command: |
             docker build -t uda-capstone .
-            docker run -p 8000:80 uda-capstone
+            docker run -d -p 8000:80 uda-capstone
 
 workflows:
   default:
