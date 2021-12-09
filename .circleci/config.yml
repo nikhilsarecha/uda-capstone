@@ -50,8 +50,3 @@ jobs:
             no_output_timeout: 30m
             command: |
                 ./run_docker.sh
-
-workflows:
-    default:
-        jobs:
-         - build  
