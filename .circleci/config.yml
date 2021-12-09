@@ -45,7 +45,7 @@ jobs:
           name: build and upload docker container
           no_output_timeout: 30m
           command: |
-            ./run_docker.sh
+            docker build -t -d nikhilsarecha/uda-capstone:latest .
 
 workflows:
   default:
