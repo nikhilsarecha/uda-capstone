@@ -37,7 +37,8 @@ jobs:
           paths:
             - ./venv
           key: v1-dependencies{{ checksum "requirements.txt" }}
-  dockerize-app:
+
+  run-docker:
     machine: true
     steps:
       - checkout
@@ -45,12 +46,13 @@ jobs:
           name: build and upload docker container
           no_output_timeout: 30m
           command: |
-            docker build -t -d nikhilsarecha/uda-capstone:latest .
+            docker build -t nikhilsarecha/uda-capstone:latest .
+            docker run -p 8000:80 uda-capstone
 
 workflows:
   default:
     jobs:
       - build 
-      - dockerize-app:
+      - run-docker:
           requires:
-            - build  
+            - build
