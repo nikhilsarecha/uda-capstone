@@ -48,6 +48,17 @@ jobs:
             docker build -t uda-capstone .
             docker run -d -p 8000:80 uda-capstone
 
+  upload-docker:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: build docker image
+          command: |
+            docker login -u nikhilsarecha -p $DOCKERHUB_PASSWORD
+            docker tag uda-capstone nikhilsarecha/uda-capstone:latest
+            docker push nikhilsarecha/uda-capstone:latest
+
 workflows:
   default:
     jobs:
@@ -55,3 +66,6 @@ workflows:
       - run-docker:
           requires:
             - build
+      - upload-docker:
+          requires:
+            - run-docker 
