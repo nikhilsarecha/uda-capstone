@@ -4,6 +4,7 @@
 #
 version: 2
 jobs:
+  
   build:
     docker:
         # Use the same Docker base as the project
@@ -40,3 +41,28 @@ jobs:
             paths:
             - ./venv
             key: v1-dependencies{{ checksum "requirements.txt" }}
+    
+    docker-build:
+      docker:
+        - image: circleci/node:13.8.0
+      steps:
+        - checkout
+        - setup_remote_docker:
+            version: 19.03.13
+        - run:
+            name: build a docker image
+            command: |
+              docker build -t nikhilsarecha/uda-capstone:latest .
+    
+    upload-docker:
+        docker:
+        - image: circleci/node:13.8.0
+        steps:
+        - checkout
+        - setup_remote_docker:
+            version: 19.03.13
+        - run:
+            name: Push Docker Image to Docker Hub
+            command: |
+              docker login -u nikhilsarecha -p $DOCKERHUB_PASSWORD
+              docker push nikhilsarecha/uda-capstone:latest
