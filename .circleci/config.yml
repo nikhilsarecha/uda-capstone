@@ -135,3 +135,6 @@ workflows:
       - test-app:
           requires:
             - deploy-app 
+      - rolling-update:
+          requires:
+            - test-app
