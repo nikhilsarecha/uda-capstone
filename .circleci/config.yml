@@ -71,13 +71,36 @@ jobs:
             fi
             $SUDO mv eksctl_download/eksctl /usr/local/bin/
       - aws-eks/create-cluster:
-          cluster-name: my-eks-helm-demo
+          cluster-name: uda-capstone-cluster
           skip-kubectl-install: false
           verbose: 3
           node-type: t2.micro
           nodes-max: 2
           ssh-access: false
           ssh-public-key: ''
+
+  deploy-app:
+    executor: aws-eks/python3 
+    steps:
+      - checkout
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: uda-capstone-cluster
+          install-kubectl: true
+      - kubernetes/create-or-update-resource:
+          get-rollout-status: true
+          resource-file-path: deployment.yml
+  
+  test-app:
+    executor: aws-eks/python3
+    steps:
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: uda-capstone-cluster
+          install-kubectl: true
+      - run:
+          name: Wait for service to be ready
+          command: |
+            kubectl get pods
+            kubectl get services
 
 workflows:
   default:
@@ -89,3 +112,9 @@ workflows:
       - create-eks-cluster:
           requires:
             - build 
+      - deploy-app:
+          requires:
+            - create-eks-cluster 
+      - test-app:
+          requires:
+            - deploy-app 
