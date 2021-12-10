@@ -51,24 +51,10 @@ jobs:
             docker tag uda-capstone nikhilsarecha/uda-capstone:latest
             docker push nikhilsarecha/uda-capstone:latest
 
-  upload-docker:
-    machine: true
-    steps:
-      - checkout
-      - run:
-          name: build docker image
-          command: |
-            docker login -u nikhilsarecha -p $DOCKERHUB_PASSWORD
-            docker tag uda-capstone nikhilsarecha/uda-capstone:latest
-            docker push nikhilsarecha/uda-capstone:latest
-
 workflows:
   default:
     jobs:
       - build 
       - run-docker:
           requires:
-            - build
-      - upload-docker:
-          requires:
-            - run-docker 
+            - build 
