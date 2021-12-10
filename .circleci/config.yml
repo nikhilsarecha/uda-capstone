@@ -51,10 +51,20 @@ jobs:
             docker tag uda-capstone nikhilsarecha/uda-capstone:latest
             docker push nikhilsarecha/uda-capstone:latest
 
+  create-eks-cluster:
+    executor: aws-eks/python3 
+    steps:
+      - checkout
+      - aws-eks/create-cluster:
+          cluster-name: my-eks-helm-demo
+
 workflows:
   default:
     jobs:
       - build 
       - run-docker:
+          requires:
+            - build 
+      - create-eks-cluster:
           requires:
             - build 
