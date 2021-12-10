@@ -102,6 +102,7 @@ jobs:
           command: |
             kubectl get pods
             kubectl get services
+            kubectl get deployments
       - run:
           name: Trigger rolling update
           command: kubectl rollout restart deployment uda-capstone
