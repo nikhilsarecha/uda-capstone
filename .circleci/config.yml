@@ -43,7 +43,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: build docker image
+          name: build and upload docker image
           command: |
             docker build -t uda-capstone .
             docker run -d -p 8000:80 uda-capstone
@@ -103,10 +103,10 @@ jobs:
             kubectl get pods
             kubectl get services
             kubectl get deployments
-      - run:
-          name: Trigger rolling update
-          command: kubectl rollout restart deployment uda-capstone-deployment
-      - run: kubectl get svc uda-capstone-deployment
+      #- run:
+      #    name: initiate rolling update
+      #    command: kubectl rollout restart deployment uda-capstone-deployment
+      #- run: kubectl get svc uda-capstone-deployment
   
   rolling-update:
     executor: aws-eks/python3
@@ -115,7 +115,7 @@ jobs:
           cluster-name: uda-capstone-cluster
           install-kubectl: true
       - run:
-          name: update deployment
+          name: initiate rolling deploymnt
           command: kubectl rollout restart deployment uda-capstone-deployment
 
 workflows:
@@ -125,16 +125,16 @@ workflows:
       - run-docker:
           requires:
             - build 
-      #- create-eks-cluster:
-      #    requires:
-      #      - build 
+      - create-eks-cluster:
+          requires:
+            - build 
       - deploy-app:
           requires:
-      #      - create-eks-cluster 
-            - run-docker
+            - create-eks-cluster 
+      #      - run-docker
       - test-app:
           requires:
             - deploy-app 
       - rolling-update:
           requires:
-            - test-app
+            - deploy-app
