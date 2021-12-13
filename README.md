@@ -31,7 +31,7 @@ For the purposes of this project, a slightly modified version of a simple 'Hello
 
 - Upload Docker image to DockerHub using the required credentials
 
-- Create an EKS cluster and its surrounding infrastructure, including:
+- Create an EKS cluster using the eksctl tool, along with its surrounding infrastructure, including:
   - EC2 instances
   - VPCs
   - Subnets
