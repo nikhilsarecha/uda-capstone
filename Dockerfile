@@ -1,4 +1,4 @@
-FROM openjdk:16-alpine3.13
+FROM python:3.7.3-stretchopenjdk:16-alpine3.13
 
 WORKDIR /app
 
