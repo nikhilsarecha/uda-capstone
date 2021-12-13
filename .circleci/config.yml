@@ -28,11 +28,6 @@ jobs:
           command: |
             . venv/bin/activate
             make lint
-      - run: 
-          name: run tests
-          command: |
-            . venv/bin/activate
-            make test
       - save_cache:
           paths:
             - ./venv
