@@ -1,6 +1,6 @@
-FROM python:3.7.3-stretch
+FROM openjdk:16-alpine3.13
 
-WORKDIR /apdkfhjbdsflj
+WORKDIR /app
 
 COPY . app.py /app/
 COPY . requirements.txt /app/
@@ -9,6 +9,6 @@ COPY . requirements.txt /app/
 RUN pip install --upgrade pip &&\
     pip install --trusted-host pypi.python.org -r requirements.txt
 
-EXPOSE 80dksjhfi
+EXPOSE 80
 
 CMD ["python", "app.py"]
