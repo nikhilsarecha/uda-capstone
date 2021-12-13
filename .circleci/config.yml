@@ -111,18 +111,4 @@ workflows:
   default:
     jobs:
       - build 
-      - run-docker:
-          requires:
-            - build 
-      - create-eks-cluster:
-          requires:
-            - run-docker  
-      - deploy-app:
-          requires:
-            - create-eks-cluster
-      - test-app:
-          requires:
-            - deploy-app 
-      - rolling-update:
-          requires:
-            - test-app 
+      
