@@ -125,13 +125,13 @@ workflows:
       - run-docker:
           requires:
             - build 
-      - create-eks-cluster:
-          requires:
-            - build 
+      #- create-eks-cluster:
+      #    requires:
+      #      - build 
       - deploy-app:
           requires:
-            - create-eks-cluster 
-      #      - run-docker
+      #      - create-eks-cluster 
+            - run-docker
       - test-app:
           requires:
             - deploy-app 
