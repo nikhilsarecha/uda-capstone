@@ -1,4 +1,4 @@
--# Cloud DevOps Engineer NanoDegree Capstone Submission
+# Cloud DevOps Engineer NanoDegree Capstone Submission
 
 ## Project Accomplishments
 
@@ -20,7 +20,7 @@ For the purposes of this project, a slightly modified version of a simple 'Hello
 
 ### Pipeline Overview
 
-- Install the following dependencies within a Python virtual environment
+- Install the following dependencies within a Python virtual environment:
   - Flask
   - pylint
   - hadolint
